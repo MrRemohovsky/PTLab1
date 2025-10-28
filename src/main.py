@@ -18,15 +18,20 @@ DATA_MAP = {
     '.yaml': {
         'reader': YamlDataReader,
         'calc': TopStudentsCounter,
-        'text': 'Top students count with scores of 90 or above in all subjects:'
+        'text': 'Students count with scores of 90 or above in all subjects:'
     }
 }
 
 
 def get_path_from_arguments(args) -> str:
     parser = argparse.ArgumentParser(description="Path to datafile")
-    parser.add_argument("-p", dest="path", type=str, required=True,
-                        help="Path to datafile")
+    parser.add_argument(
+        "-p",
+        dest="path",
+        type=str,
+        default='../data/data.yaml',
+        help="Path to datafile"
+    )
     args = parser.parse_args(args)
     return args.path
 
@@ -35,12 +40,11 @@ def main():
     path = get_path_from_arguments(sys.argv[1:])
     ext = os.path.splitext(path)[1].lower()
 
-    if ext in (".yaml", ".yml") and ext != '.yaml':
-        data_map = DATA_MAP['.yaml']
-    else:
-        data_map = DATA_MAP[ext]
-
     try:
+        if ext in (".yaml", ".yml") and ext != '.yaml':
+            data_map = DATA_MAP['.yaml']
+        else:
+            data_map = DATA_MAP[ext]
         reader, calc = data_map['reader'], data_map['calc']
     except KeyError:
         raise Exception(f"Unsupported file type: {ext}")
