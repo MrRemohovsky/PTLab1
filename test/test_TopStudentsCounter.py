@@ -23,7 +23,7 @@ class TestTopStudentsCounter:
     @pytest.fixture()
     def students_borderline_scores(self) -> DataType:
         return {
-            "Иванов Иван": [("математика", 89), ("география", 90)],
+            "Иванов Иван": [("математика", 88), ("география", 90)],
             "Петров Петр": [("математика", 91), ("химия", 90)],
         }
 
